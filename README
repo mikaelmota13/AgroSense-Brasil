@@ -1,0 +1,65 @@
+# AgroSense Brasil
+
+AgroSense Brasil é uma aplicação web desenvolvida com Flask para gerenciar usuários e setores agrícolas, além de monitorar variáveis ambientais.
+
+## Estrutura do Projeto
+
+## Funcionalidades
+
+- **Login de Usuário**: Permite que os usuários façam login no sistema.
+- **Cadastro de Usuário**: Permite que novos usuários se cadastrem no sistema.
+- **Edição de Usuário**: Permite que os usuários editem suas informações.
+- **Deleção de Usuário**: Permite que os usuários sejam deletados do sistema.
+- **Dashboard do Usuário**: Exibe informações sobre os setores e variáveis ambientais do usuário logado.
+- **Cadastro de Setor**: Permite que os usuários cadastrem novos setores.
+- **Visualização de Variáveis**: Permite que os usuários visualizem as variáveis ambientais de um setor.
+
+## Instalação
+
+1. Clone o repositório:
+    ```sh
+    git clone <URL_DO_REPOSITORIO>
+    cd AgroSense-Brasil
+    ```
+
+2. Crie um ambiente virtual e ative-o:
+    ```sh
+    python -m venv venv
+    source venv/bin/activate  # No Windows, use `venv\Scripts\activate`
+    ```
+
+3. Instale as dependências:
+    ```sh
+    pip install flask sqlite3
+    ```
+
+4. Inicialize o banco de dados:
+    ```sh
+    python form_db.py
+    ```
+
+5. Execute a aplicação:
+    ```sh
+    python app.py
+    ```
+
+6. Acesse a aplicação em seu navegador:
+    ```
+    http://127.0.0.1:5000/
+    ```
+
+## Estrutura do Banco de Dados
+
+O banco de dados SQLite `form_db.db` contém as seguintes tabelas:
+
+- **users**: Armazena informações dos usuários.
+- **sectors**: Armazena informações dos setores.
+- **variaveis**: Armazena variáveis ambientais dos setores.
+
+## Templates
+
+Os templates HTML estão localizados na pasta `templates/` e são usados para renderizar as páginas da aplicação.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
