@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, session, render_template, request, redirect, url_for, flash
 import sqlite3 as sql
 
 app=Flask(__name__)
@@ -6,18 +6,22 @@ app=Flask(__name__)
 @app.route("/")
 @app.route("/login_user", methods=["POST", "GET"])
 def login_user():
-    if request.method=="POST":
-        nome=request.form["nome"]
-        senha=request.form["senha"]
-        con=sql.connect("form_db.db")
-        cur=con.cursor()
-        cur.execute("select * from users where NOME=? and SENHA=?", (nome, senha))
-        data=cur.fetchone()
-        print(data)
+    if request.method == "POST":
+        nome = request.form["nome"]
+        senha = request.form["senha"]
+        
+        con = sql.connect("form_db.db")
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM users WHERE NOME=? AND SENHA=?", (nome, senha))
+        data = cur.fetchone()
+        
         if data:
+            session["user_id"] = data["ID"]
             return redirect(url_for("dashboard_user"))
         else:
             flash("Email ou senha incorretos", "danger")
+    
     return render_template("login_user.html")
 
 @app.route("/index")
@@ -29,20 +33,19 @@ def index():
     data=cur.fetchall()
     return render_template ("index.html", datas=data)
 
-
 @app.route("/add_user", methods=["POST", "GET"])
 def add_user():
     if request.method=="POST":
         nome=request.form["nome"]
         email=request.form["email"]
         senha=request.form["senha"]
-      #
+        
         con=sql.connect("form_db.db")
         cur=con.cursor()
         cur.execute("insert into users(NOME,EMAIL,SENHA) values (?,?,?)", (nome, email, senha))
         con.commit()
         flash("Dados cadastrados", "success")
-        return redirect(url_for("index"))
+        return redirect(url_for("login_user"))
     return render_template("add_user.html")
 
 @app.route("/edit_user/<string:id>", methods=["POST","GET"])
@@ -75,11 +78,59 @@ def delete_user(id):
 
 @app.route("/dashboard_user")
 def dashboard_user():
+    if "user_id" not in session:
+        flash("Faça login primeiro", "warning")
+        return redirect(url_for("login_user"))
+
+    user_id = session["user_id"] 
+
+    con = sql.connect("form_db.db")
+    con.row_factory = sql.Row
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM sectors WHERE PROPRIETARIO = ?", (user_id,))
+    setores = cur.fetchall()
+
+    variaveis_por_setor = {}
+    for setor in setores:
+        cur.execute("SELECT * FROM variaveis WHERE SETOR = ?", (setor["ID"],))
+        variaveis_por_setor[setor["ID"]] = cur.fetchall()
+
+    con.close()
+
+    return render_template("dashboard_user.html", setores=setores, variaveis_por_setor=variaveis_por_setor, user_id=user_id)
+
+
+@app.route("/add_setor/<int:id>", methods=["POST", "GET"])  
+def add_setor(id):
+    if request.method == "POST":
+        nome = request.form["nome_setor"]
+        capacidade_reservatorio = request.form["capacidade_reservatorio"]
+        poco_profundidade = request.form["profundidade_poco"]
+
+        con = sql.connect("form_db.db")
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO sectors (NOME, PROPRIETARIO, CAPACIDADE_RESERVATORIO, POCO_PROFUNDIDADE) VALUES (?, ?, ?, ?)",
+            (nome, id, capacidade_reservatorio, poco_profundidade)
+        )
+        con.commit()
+        flash("Setor cadastrado com sucesso", "success")
+        return redirect(url_for("dashboard_user"))
+
     return render_template("dashboard_user.html")
 
-@app.route("/add_setor", methods=["POST", "GET"])
-def add_setor():
-    return render_template("add_setor.html")
+
+@app.route("/variaveis/<int:id>", methods=["GET"])
+def variaveis(id):
+    con = sql.connect("form_db.db")
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM variaveis WHERE SETOR = ?", (id,))
+    variaveis = cur.fetchall()
+
+    return render_template("variaveis.html", variaveis=variaveis)
+
 
 if __name__=='__main__':
     app.secret_key="admin123"

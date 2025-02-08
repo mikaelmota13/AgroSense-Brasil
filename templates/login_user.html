@@ -1,49 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>CADASTRO DE PESSOAS</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Agrosense</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .left-section {
+            flex: 1.5;
+            background-image: url('https://img.freepik.com/fotos-gratis/lindo-jardim-de-morango-e-nascer-do-sol-em-doi-ang-khang-chiang-mai-tailandia_335224-761.jpg?t=st=1738706031~exp=1738709631~hmac=09de37afaf820f92f6db021b03f8059a95c1bba3884a45c16b6a4edebf81a377&w=1060');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .right-section {
+            flex: 1;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form {
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .login-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-form a {
+            display: block;
+            margin-bottom: 10px;
+            color:rgb(36, 51, 68);
+            text-decoration: underline;
+            text-align: left;
+        }
+
+        .login-form a:hover {
+            text-decoration: underline;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{url_for('login_user')}}">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('login_user')}}">Sobre nós</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </header>
-<div class="row" >
-    <div class="col-5 mx-auto">
-        <h3>Login</h3><hr>
-        <form method="post" action="{{url_for('login_user')}}">
-            <div class="form-group">
-                <label>Nome</label>
-                <input type="text" name="nome" required class="form-control" placeholder="Nome de usuário">
-            </div>
-            <div class="form-group">
-                <label>Senha</label>
-                <input type="password" name="senha" required class="form-control" placeholder="Senha">
-            </div>
-
-        </br>
-        <div class="d-flex gap-2" align="center">
-            <input type="submit" value="Entrar" class="btn btn-primary" > 
-            <a class="btn btn-secondary" href="{{ url_for('add_user') }}">Cadastrar-se</a>
-        </div align="center">
-        <br><div > OU </div>
-        <a  align="center" class="btn btn-secondary" href="{{ url_for('add_user') }}">Esqueceu a senha?</a>
+    <div class="left-section"></div>
+    <div class="right-section">
+        <div class="login-form">
+            <h1>Agrosense</h1>
+            <form  method="post" action="{{url_for('login_user')}}">
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="nome" required>
+                
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+                
+                <a href="#">Esqueci a minha senha</a>
+                <a href="{{ url_for('add_user') }}">Ainda não tenho cadastro</a>
+                
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
     </div>
-        
-</div>
 </body>
 </html>
