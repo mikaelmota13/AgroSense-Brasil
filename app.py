@@ -1,5 +1,6 @@
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 import sqlite3 as sql
+import hashlib
 
 app=Flask(__name__)
 
@@ -10,10 +11,12 @@ def login_user():
         nome = request.form["nome"]
         senha = request.form["senha"]
         
+        senha_sha512 = hashlib.sha512(senha.encode()).hexdigest()
+        
         con = sql.connect("form_db.db")
         con.row_factory = sql.Row
         cur = con.cursor()
-        cur.execute("SELECT * FROM users WHERE NOME=? AND SENHA=?", (nome, senha))
+        cur.execute("SELECT * FROM users WHERE NOME=? AND SENHA=?", (nome, senha_sha512))
         data = cur.fetchone()
         
         if data:
@@ -40,12 +43,15 @@ def add_user():
         email=request.form["email"]
         senha=request.form["senha"]
         
+        senha_sha512 = hashlib.sha512(senha.encode()).hexdigest()
+
         con=sql.connect("form_db.db")
         cur=con.cursor()
-        cur.execute("insert into users(NOME,EMAIL,SENHA) values (?,?,?)", (nome, email, senha))
+        cur.execute("insert into users(NOME,EMAIL,SENHA) values (?,?,?)", (nome, email, senha_sha512))
         con.commit()
         flash("Dados cadastrados", "success")
         return redirect(url_for("login_user"))
+
     return render_template("add_user.html")
 
 @app.route("/edit_user/<string:id>", methods=["POST","GET"])
@@ -54,9 +60,13 @@ def edit_user(id):
         nome=request.form["nome"]
         email=request.form["email"]
         senha=request.form["senha"]
+        
+        senha_sha512 = hashlib.sha512(senha.encode()).hexdigest()
+
+        
         con=sql.connect("form_db.db")
         cur=con.cursor()
-        cur.execute("update users set NOME=?,EMAIL=?,SENHA=? where ID=?", (nome, email, senha, id))
+        cur.execute("update users set NOME=?,EMAIL=?,SENHA=? where ID=?", (nome, email, senha_sha512, id))
         con.commit()
         flash("Dados atualizados", "success")
         return redirect(url_for("index"))

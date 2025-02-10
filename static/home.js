@@ -92,6 +92,8 @@ function openOverlay() {
     document.getElementById('overlay').classList.add('active');
 }
 
+
+
 // Adiciona um evento de clique na janela para fechar o overlay ao clicar fora dele
 window.addEventListener('click', function(event) {
     var overlay = document.getElementById('overlay');

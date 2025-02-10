@@ -42,9 +42,7 @@
                 {% if setor["ID"] in variaveis_por_setor %}
                     {% for var in variaveis_por_setor[setor["ID"]] %}
                         <div class="card">
-                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="40" fill="#28a745" />
-                            </svg>
+                            <img src="{{ url_for('static', filename='setor.png') }}" alt="setor" width="80" height="80">
                             <p>Data: {{ var["DATA"] }}</p>
                             <p>Irrigação: {{ var["IRRIGACAO"] }}</p> 
                             <p>Temperatura: {{ var["TEMPERATURA"] }}</p>
@@ -68,7 +66,6 @@
             {% endfor %}
         </div>
 
-        <!-- Conteúdo para Histórico -->
         <div id="historico" class="content">
             <h2>Histórico</h2>
             <form class="historico-form" onsubmit="pesquisarHistorico(event)">

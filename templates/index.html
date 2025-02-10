@@ -9,7 +9,7 @@
         <th scope="col">ID</th>
         <th scope="col">Nome</th>
         <th scope="col">E-mail</th>
-        <th scope="col">Senha</th>
+         <!--<th scope="col">Senha</th>-->
       </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
         <td>{{loop.index}}</td>
         <td>{{row.NOME}}</td>
         <td>{{row.EMAIL}}</td>
-        <td>{{row.SENHA}}</td>
+        <!--<td>{{row.SENHA}}</td>-->
         <td><a href="{{url_for('edit_user',id=row.ID)}}" class="btn btn-primary">Editar</a></td>
         <td><a href="{{url_for('delete_user',id=row.ID)}}" class="btn btn-danger" onclick="return confirm ('Tem certeza que deseja apagar?')">Deletar</a></td>
       </tr>

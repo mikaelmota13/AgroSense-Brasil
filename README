@@ -30,7 +30,7 @@ AgroSense Brasil é uma aplicação web desenvolvida com Flask para gerenciar us
 
 3. Instale as dependências:
     ```sh
-    pip install flask sqlite3
+    pip install flask sqlite3 hashlib
     ```
 
 4. Inicialize o banco de dados:
@@ -63,3 +63,4 @@ Os templates HTML estão localizados na pasta `templates/` e são usados para re
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
