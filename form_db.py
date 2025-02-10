@@ -42,6 +42,8 @@ cur.execute('''
 
 cur.execute("INSERT INTO users (NOME, EMAIL, SENHA) VALUES (?, ?, ?)", 
             ('mikael', 'mikael@123.com', 'mikael123'))
+cur.execute("INSERT INTO users (NOME, EMAIL, SENHA) VALUES (?, ?, ?)", 
+            ('joao', 'joao@123', '123'))    
 
 cur.execute("INSERT INTO sectors (PROPRIETARIO, NOME, CAPACIDADE_RESERVATORIO, POCO_PROFUNDIDADE) VALUES (?, ?, ?, ?)", (1, 'Setor A', 1000, 50)) 
 

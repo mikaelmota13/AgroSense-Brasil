@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+img{
+    width: 70%;
+    margin-bottom: 20px; 
+    margin-top: -50px
+}
+.left-section {
+    flex: 1.5;
+    background-image: url('https://img.freepik.com/fotos-gratis/lindo-jardim-de-morango-e-nascer-do-sol-em-doi-ang-khang-chiang-mai-tailandia_335224-761.jpg?t=st=1738954762~exp=1738958362~hmac=fbc9b8b3e96b2ba58d8ba8448d93136c3591c25b8d28196195ae44ce0cc6eec4&w=1060');
+    background-size: cover;
+    background-position: center;
+}
+
+.right-section {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-form {
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.login-form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form a {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.links a {
+    text-decoration: none; 
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.links a:first-child {
+    color: #555;
+}
+
+.links a:last-child {
+    color: #555; 
+}
+
+.links a:first-child:hover {
+    text-decoration: underline; 
+    color: #d62727;
+}
+.links a:last-child:hover{
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.login-form button {
+    width: 107%;
+    padding: 10px;
+    margin-top: 5px; 
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #218838;
+}

@@ -4,273 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Agrosense</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            background-color: #f9f9f9;
-        }
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <script src="{{ url_for('static', filename='home.js') }}" defer></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 
-        /* Aba lateral fixa */
-        .sidebar {
-            width: 250px;
-            background-color: white;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #e0e0e0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: fixed;
-            height: 100vh;
-        }
-
-        .sidebar h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Barra separadora */
-        .separator {
-            width: 100%;
-            border-top: 1px solid #e0e0e0;
-            margin-bottom: 20px;
-        }
-
-        .sidebar button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            background-color: transparent;
-            color: #555;
-            text-align: left;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 5px;
-        }
-
-        /* Efeito ao passar o mouse nos botões */
-        .sidebar button:hover {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-        }
-
-        /* Estilo específico para o botão "Sair" */
-        .sidebar .sair-button {
-            margin-top: 150%; /* Botão "Sair" movido para baixo */
-        }
-
-        .sidebar .sair-button:hover {
-            background-color: rgba(255, 0, 0, 0.1);
-            color: #ff0000;
-        }
-
-        /* Conteúdo principal com rolagem */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background-color: white;
-            margin-left: 300px; /* Ajuste na margem esquerda */
-            overflow-y: auto;
-            height: 100vh;
-        }
-
-        .main-content .content {
-            display: none;
-            font-size: 18px;
-            color: #333;
-        }
-
-        /* Exibe o conteúdo quando o botão correspondente é clicado */
-        .main-content .content.active {
-            display: block;
-        }
-
-        /* Cards de setores */
-        .card {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            width: 200px;
-            margin: 10px;
-            display: inline-block;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 14px;
-            color: #777;
-        }
-
-        /* Botão flutuante */
-        .floating-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
-        }
-
-        .floating-button:hover {
-            background-color: #218838;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-content h2 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .modal-content label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .modal-content input {
-            width: auto; /* Largura ajustada para auto */
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .modal-content button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-content button:hover {
-            background-color: #218838;
-        }
-
-        .modal-content .close-button {
-            background-color: #ccc;
-            margin-top: 10px;
-        }
-
-        .modal-content .close-button:hover {
-            background-color: #999;
-        }
-
-        /* Formulário de pesquisa de histórico */
-        .historico-form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .historico-form label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .historico-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .historico-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .historico-form button:hover {
-            background-color: #218838;
-        }
-    </style>
 </head>
 <body>
-    <!-- Aba lateral -->
+   
     <div class="sidebar">
-        <h1>Agrosense</h1>
+        <img src="{{ url_for('static', filename='logoagrosense.png') }}" alt="logo Agrosense">
         <div class="separator"></div>
-        <button onclick="showContent('clima')">Clima e Solo</button>
-        <button onclick="showContent('agua')">Água</button>
-        <button onclick="showContent('historico')">Histórico</button>
-        <button class="sair-button" onclick="sair()">Sair</button>
+        <button onclick="showContent('clima')">
+            <i class="material-icons">cloud</i> Clima e Solo
+        </button>
+        <button onclick="showContent('agua')">
+            <i class="material-icons">opacity</i> Água
+        </button>
+        <button onclick="showContent('historico')">
+            <i class="material-icons">history</i> Histórico
+        </button>
+        <button class="sair-button" onclick="window.location.href='{{ url_for('login_user') }}'">
+            <i class="material-icons">exit_to_app</i> Sair
+        </button>
     </div>
 
+    <!-- Ícone do menu hambúrguer para dispositivos móveis -->
+    <div class="hamburger-menu">
+        <i class="material-icons" onclick="toggleMenu()">menu</i>
+    </div>
+
+    <!-- Conteúdo principal -->
     <div class="main-content">
+        <!-- Conteúdo para Clima e Solo -->
         <div id="clima" class="content">
             <h2>Setores de Clima e Solo</h2>
-           
             {% for setor in setores %}
                 {% if setor["ID"] in variaveis_por_setor %}
                     {% for var in variaveis_por_setor[setor["ID"]] %}
@@ -286,22 +53,22 @@
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-
         </div>
 
+        <!-- Conteúdo para Água -->
         <div id="agua" class="content">
             <h2>Setores de Água</h2>
             {% for setor in setores %}
-            <div class="card">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="40" fill="#007BFF" />
-                </svg>
-                <h3>{{ setor["NOME"] }}</h3>    
+            <div class="card" onclick="openOverlay()">
+                <img src="{{ url_for('static', filename='reservatório.png') }}" alt="reservatorio">
+                <h3>Reservatório</h3>
                 <p>Volume: 5000 L</p>
+                <h3>{{ setor["NOME"] }}</h3>    
             </div>
             {% endfor %}
         </div>
 
+        <!-- Conteúdo para Histórico -->
         <div id="historico" class="content">
             <h2>Histórico</h2>
             <form class="historico-form" onsubmit="pesquisarHistorico(event)">
@@ -320,6 +87,7 @@
 
     <div class="modal" id="modal">
         <div class="modal-content">
+            <button type="button" class="close-button" onclick="closeModal()">X</button>
             <h2>Cadastrar Novo Setor</h2>
             <form id="cadastroForm" method="post" action="{{ url_for('add_setor', id=user_id) }}">
                 <label for="nome_setor">Nome do Setor:</label>
@@ -337,51 +105,57 @@
         </div>
     </div>
 
-    <script>
-        // Função para exibir o conteúdo correspondente ao botão clicado
-        function showContent(contentId) {
-            // Oculta todos os conteúdos
-            document.querySelectorAll('.content').forEach(content => {
-                content.classList.remove('active');
-            });
+ <!-- Overlay de informações do setor -->
+<div class="overlay" id="overlay">
+    <div class="overlay-content">
+        <button type="button" class="close-button" onclick="closeOverlay()">X</button>
+        <h2>Informações</h2>
+        <h3>Reservatório</h3>
+        <div class="info-container">
+            <!-- Coluna da Água -->
+            <div class="info-column">
+                <h4>Água</h4>
+                <div class="progress-circle">
+                    <div class="progress-text">75%</div>
+                </div>
+                <div class="small-cards">
+                    <div class="small-card">
+                        <h5>Volume</h5>
+                        <p>5000 L</p>
+                    </div>
+                    <div class="small-card">
+                        <h5>pH</h5>
+                        <p>7.0</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Coluna dos Minerais em uma grade 2x2 -->
+            <div class="info-column">
+                <h4>Minerais</h4>
+                <div class="minerals-grid">
+                    <div class="mineral-item">
+                        <h5>Cálcio</h5>
+                        <p>120 mg/L</p>
+                    </div>
+                    <div class="mineral-item">
+                        <h5>Fósforo</h5>
+                        <p>80 mg/L</p>
+                    </div>
+                    <div class="mineral-item">
+                        <h5>Ferro</h5>
+                        <p>5 mg/L</p>
+                    </div>
+                    <div class="mineral-item">
+                        <h5>Potássio</h5>
+                        <p>150 mg/L</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // Exibe o conteúdo correspondente
-            const content = document.getElementById(contentId);
-            if (content) {
-                content.classList.add('active');
-            }
-        }
 
-        // Função para o botão "Sair"
-        function sair() {
-            alert("Você saiu da aplicação.");
-            // Aqui você pode redirecionar para a tela de login ou fazer logout
-        }
 
-        // Funções para abrir e fechar o modal
-        function openModal() {
-            document.getElementById('modal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        // Função para enviar o formulário de cadastro
-        document.getElementById('cadastroForm').addEventListener('submit', function (e) {
-            //e.preventDefault(); // Impede o envio do formulário
-            alert("Setor cadastrado com sucesso!");
-            closeModal(); // Fecha o modal após o cadastro
-        });
-
-        // Função para pesquisar histórico
-        function pesquisarHistorico(event) {
-            event.preventDefault(); // Impede o envio do formulário
-            const dataInicio = document.getElementById('data-inicio').value;
-            const dataFim = document.getElementById('data-fim').value;
-            alert(`Pesquisando histórico de ${dataInicio} até ${dataFim}`);
-            // Aqui você pode adicionar a lógica para buscar o histórico
-        }
-    </script>
 </body>
 </html>

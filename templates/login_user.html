@@ -4,100 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Agrosense</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-
-        .left-section {
-            flex: 1.5;
-            background-image: url('https://img.freepik.com/fotos-gratis/lindo-jardim-de-morango-e-nascer-do-sol-em-doi-ang-khang-chiang-mai-tailandia_335224-761.jpg?t=st=1738706031~exp=1738709631~hmac=09de37afaf820f92f6db021b03f8059a95c1bba3884a45c16b6a4edebf81a377&w=1060');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .right-section {
-            flex: 1;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-form {
-            width: 80%;
-            max-width: 300px;
-            text-align: center;
-        }
-
-        .login-form h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-form label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        .login-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .login-form a {
-            display: block;
-            margin-bottom: 10px;
-            color:rgb(36, 51, 68);
-            text-decoration: underline;
-            text-align: left;
-        }
-
-        .login-form a:hover {
-            text-decoration: underline;
-        }
-
-        .login-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .login-form button:hover {
-            background-color: #218838;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
-    <div class="left-section"></div>
+
+    <div class="left-section">
+
+    </div>
     <div class="right-section">
         <div class="login-form">
-            <h1>Agrosense</h1>
-            <form  method="post" action="{{url_for('login_user')}}">
+            <img src="{{ url_for('static', filename='logoagrosense.png') }}" alt="logo do Agrosense">
+        
+            <form method="post" action="{{url_for('login_user')}}">
                 <label for="login">Login:</label>
                 <input type="text" id="login" name="nome" required>
                 
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" required>
                 
+                <div class="links">
                 <a href="#">Esqueci a minha senha</a>
                 <a href="{{ url_for('add_user') }}">Ainda não tenho cadastro</a>
-                
+            </div>
                 <button type="submit">Entrar</button>
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                        <script>
+                            alert("{{ message | safe }}");
+                            </script>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </form>
         </div>
     </div>
