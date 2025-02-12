@@ -42,11 +42,13 @@
                 {% if setor["ID"] in variaveis_por_setor %}
                     {% for var in variaveis_por_setor[setor["ID"]] %}
                         <div class="card">
+                            <h3>{{ setor["NOME"] }}</h3>
                             <img src="{{ url_for('static', filename='setor.png') }}" alt="setor" width="80" height="80">
                             <p>Data: {{ var["DATA"] }}</p>
                             <p>Irrigação: {{ var["IRRIGACAO"] }}</p> 
                             <p>Temperatura: {{ var["TEMPERATURA"] }}</p>
                             <p>Umidade: {{ var["UMIDADE"] }}</p>
+                            <a href="{{ url_for('remove_setor', id=setor['ID']) }}" class="botao" onclick="return confirm('Tem certeza que deseja apagar este setor?')"> Excluir </a>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -77,6 +79,8 @@
 
                 <button type="submit">Pesquisar</button>
             </form>
+              <!-- Resultados da pesquisa -->
+              <div id="resultado-pesquisa" class="resultado-pesquisa"></div>
         </div>
     </div>
 
@@ -108,6 +112,7 @@
         <button type="button" class="close-button" onclick="closeOverlay()">X</button>
         <h2>Informações</h2>
         <h3>Reservatório</h3>
+
         <div class="info-container">
             <!-- Coluna da Água -->
             <div class="info-column">
@@ -125,6 +130,12 @@
                         <p>7.0</p>
                     </div>
                 </div>
+                <!-- From Uiverse.io by RaspberryBee -->
+                <h4>Irrigação</h4>
+<label class="switch" style="margin-top:10px">
+    <input type="checkbox">
+    <span class="slider"></span>
+  </label>
             </div>
             <!-- Coluna dos Minerais em uma grade 2x2 -->
             <div class="info-column">

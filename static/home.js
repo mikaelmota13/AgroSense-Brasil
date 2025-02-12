@@ -13,7 +13,7 @@ menuItems.forEach(item => {
 });
 
 // Fecha a sidebar ao clicar fora dela e do menu hambúrguer
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     var sidebar = document.querySelector('.sidebar');
     var hamburgerMenu = document.querySelector('.hamburger-menu');
 
@@ -58,7 +58,7 @@ function openModal() {
 }
 
 // Fecha o modal ao clicar fora dele
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     var modal = document.getElementById('modal');
     var modalContent = document.querySelector('.modal-content');
 
@@ -71,12 +71,12 @@ window.addEventListener('click', function(event) {
 document.getElementById('cadastroForm').addEventListener('submit', function (e) {
     //e.preventDefault(); 
     alert("Setor cadastrado com sucesso!");
-    closeModal(); 
+    closeModal();
 });
 
 // Função para pesquisar histórico
 function pesquisarHistorico(event) {
-    event.preventDefault(); 
+    event.preventDefault();
     const dataInicio = document.getElementById('data-inicio').value;
     const dataFim = document.getElementById('data-fim').value;
     alert(`Pesquisando histórico de ${dataInicio} até ${dataFim}`);
@@ -92,10 +92,20 @@ function openOverlay() {
     document.getElementById('overlay').classList.add('active');
 }
 
+function pesquisarHistorico(event) {
+    event.preventDefault();
+    const dataInicio = document.getElementById('data-inicio').value;
+    const dataFim = document.getElementById('data-fim').value;
 
+    const resultadoDiv = document.getElementById('resultado-pesquisa');
+    resultadoDiv.innerHTML = `<h3>Resultados da Pesquisa</h3>
+    <p>Exibindo dados de ${dataInicio} até ${dataFim}</p>
+    <h4> Esse é um hitorioco de dados de temperatura</h4>`;
+    resultadoDiv.style.display = 'block';
+}
 
 // Adiciona um evento de clique na janela para fechar o overlay ao clicar fora dele
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     var overlay = document.getElementById('overlay');
     var overlayContent = document.querySelector('.overlay-content');
     // Verifica se o clique ocorreu fora do conteúdo do overlay

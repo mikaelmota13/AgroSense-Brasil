@@ -141,6 +141,15 @@ def variaveis(id):
 
     return render_template("variaveis.html", variaveis=variaveis)
 
+@app.route('/remove_setor/<int:id>', methods=['GET'])
+def remove_setor(id):
+    con = sql.connect('form_db.db')
+    cur = con.cursor()
+    cur.execute('DELETE FROM sectors WHERE ID = ?', (id,))
+    con.commit()
+    con.close()
+    return redirect(url_for('dashboard_user'))  
+
 
 if __name__=='__main__':
     app.secret_key="admin123"

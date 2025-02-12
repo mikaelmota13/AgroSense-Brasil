@@ -41,7 +41,7 @@ cur.execute('''
 ''')
 
 cur.execute("INSERT INTO users (NOME, EMAIL, SENHA) VALUES (?, ?, ?)", 
-            ('pao', 'pao@dequeijo.com', '3627909a29c31381a071ec27f7c9ca97726182aed29a7ddd2e54353322cfb30abb9e3a6df2ac2c20fe23436311d678564d0c8d305930575f60e2d3d048184d79'))
+            ('admin', 'pao@dequeijo.com', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'))
 
 cur.execute("INSERT INTO sectors (PROPRIETARIO, NOME, CAPACIDADE_RESERVATORIO, POCO_PROFUNDIDADE) VALUES (?, ?, ?, ?)", (1, 'Setor A', 1000, 50)) 
 
