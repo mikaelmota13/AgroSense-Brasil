@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Agrosense</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
     <script src="{{ url_for('static', filename='home.js') }}" defer></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
+
 <body>
-   
+
     <div class="sidebar">
-        <img src="{{ url_for('static', filename='logoagrosense.png') }}" alt="logo Agrosense">
+        <h1>Menu</h1>
         <div class="separator"></div>
         <button onclick="showContent('clima')">
             <i class="material-icons">cloud</i> Clima e Solo
@@ -35,25 +37,87 @@
 
     <!-- Conteúdo principal -->
     <div class="main-content">
+        <img src="{{ url_for('static', filename='logoagrosense.png') }}" alt="logo Agrosense" style="height: 80px;">
+        <!-- Conteúdo para Clima e Solo -->
         <!-- Conteúdo para Clima e Solo -->
         <div id="clima" class="content">
             <h2>Setores de Clima e Solo</h2>
             {% for setor in setores %}
-                {% if setor["ID"] in variaveis_por_setor %}
-                    {% for var in variaveis_por_setor[setor["ID"]] %}
-                        <div class="card">
-                            <h3>{{ setor["NOME"] }}</h3>
-                            <img src="{{ url_for('static', filename='setor.png') }}" alt="setor" width="80" height="80">
-                            <p>Data: {{ var["DATA"] }}</p>
-                            <p>Irrigação: {{ var["IRRIGACAO"] }}</p> 
-                            <p>Temperatura: {{ var["TEMPERATURA"] }}</p>
-                            <p>Umidade: {{ var["UMIDADE"] }}</p>
-                            <a href="{{ url_for('remove_setor', id=setor['ID']) }}" class="botao" onclick="return confirm('Tem certeza que deseja apagar este setor?')"> Excluir </a>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+            {% if setor["ID"] in variaveis_por_setor %}
+            {% for var in variaveis_por_setor[setor["ID"]] %}
+            <div class="card" onclick="openClimaOverlay()">
+                <h3>{{ setor["NOME"] }}</h3>
+                <img src="{{ url_for('static', filename='setor.png') }}" alt="setor" width="80" height="80">
+                <p>Data: {{ var["DATA"] }}</p>
+                <p>Irrigação: {{ var["IRRIGACAO"] }}</p>
+                <p>Temperatura: {{ var["TEMPERATURA"] }}</p>
+                <p>Umidade: {{ var["UMIDADE"] }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
             {% endfor %}
         </div>
+
+        <!-- Overlay de Clima e Solo -->
+        <div class="overlay" id="clima-overlay">
+            <div class="overlay-content">
+                <button type="button" class="close-button" onclick="closeClimaOverlay()">X</button>
+                <h2>Informações Climáticas</h2>
+                <div class="info-container">
+                    <div class="info-column">
+                        <h4>Temperatura</h4>
+                        <div class="small-cards">
+                            <div class="small-card">
+                                <h5>Ar</h5>
+                                <p>27°C</p>
+                            </div>
+                            <div class="small-card">
+                                <h5>Solo</h5>
+                                <p>25°C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-column">
+                        <h4>Umidade</h4>
+                        <div class="small-cards">
+                            <div class="small-card">
+                                <h5>Ar</h5>
+                                <p>55%</p>
+                            </div>
+                            <div class="small-card">
+                                <h5>Solo</h5>
+                                <p>65%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-column">
+                        <h4>Outros Dados</h4>
+                        <div class="minerals-grid">
+                            <div class="mineral-item">
+                                <h5>Radiação Solar</h5>
+                                <p>700 W/m²</p>
+                            </div>
+                            <div class="mineral-item">
+                                <h5>Chuva</h5>
+                                <p>10 mm</p>
+                            </div>
+                            <div class="mineral-item">
+                                <h5>Evapotranspiração Real</h5>
+                                <p>3 mm</p>
+                            </div>
+                            <div class="mineral-item">
+                                <h5>Evapotranspiração Potencial</h5>
+                                <p>5 mm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
         <!-- Conteúdo para Água -->
         <div id="agua" class="content">
@@ -63,7 +127,7 @@
                 <img src="{{ url_for('static', filename='reservatório.png') }}" alt="reservatorio">
                 <h3>Reservatório</h3>
                 <p>Volume: 5000 L</p>
-                <h3>{{ setor["NOME"] }}</h3>    
+                <h3>{{ setor["NOME"] }}</h3>
             </div>
             {% endfor %}
         </div>
@@ -79,8 +143,8 @@
 
                 <button type="submit">Pesquisar</button>
             </form>
-              <!-- Resultados da pesquisa -->
-              <div id="resultado-pesquisa" class="resultado-pesquisa"></div>
+            <!-- Resultados da pesquisa -->
+            <div id="resultado-pesquisa" class="resultado-pesquisa"></div>
         </div>
     </div>
 
@@ -106,64 +170,63 @@
         </div>
     </div>
 
- <!-- Overlay de informações do setor -->
-<div class="overlay" id="overlay">
-    <div class="overlay-content">
-        <button type="button" class="close-button" onclick="closeOverlay()">X</button>
-        <h2>Informações</h2>
-        <h3>Reservatório</h3>
+    <!-- Overlay de informações do setor -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <button type="button" class="close-button" onclick="closeOverlay()">X</button>
+            <h2>Informações</h2>
+            <h3>Reservatório</h3>
 
-        <div class="info-container">
-            <!-- Coluna da Água -->
-            <div class="info-column">
-                <h4>Água</h4>
-                <div class="progress-circle">
-                    <div class="progress-text">75%</div>
+            <div class="info-container">
+                <!-- Coluna da Água -->
+                <div class="info-column">
+                    <h4>Água</h4>
+                    <div class="progress-circle">
+                        <div class="progress-text">75%</div>
+                    </div>
+                    <div class="small-cards">
+                        <div class="small-card">
+                            <h5>Volume</h5>
+                            <p>5000 L</p>
+                        </div>
+                        <div class="small-card">
+                            <h5>pH</h5>
+                            <p>7.0</p>
+                        </div>
+                    </div>
+                    <!-- From Uiverse.io by RaspberryBee -->
+                    <h4>Irrigação</h4>
+                    <label class="switch" style="margin-top:10px">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
-                <div class="small-cards">
-                    <div class="small-card">
-                        <h5>Volume</h5>
-                        <p>5000 L</p>
-                    </div>
-                    <div class="small-card">
-                        <h5>pH</h5>
-                        <p>7.0</p>
-                    </div>
-                </div>
-                <!-- From Uiverse.io by RaspberryBee -->
-                <h4>Irrigação</h4>
-<label class="switch" style="margin-top:10px">
-    <input type="checkbox">
-    <span class="slider"></span>
-  </label>
-            </div>
-            <!-- Coluna dos Minerais em uma grade 2x2 -->
-            <div class="info-column">
-                <h4>Minerais</h4>
-                <div class="minerals-grid">
-                    <div class="mineral-item">
-                        <h5>Cálcio</h5>
-                        <p>120 mg/L</p>
-                    </div>
-                    <div class="mineral-item">
-                        <h5>Fósforo</h5>
-                        <p>80 mg/L</p>
-                    </div>
-                    <div class="mineral-item">
-                        <h5>Ferro</h5>
-                        <p>5 mg/L</p>
-                    </div>
-                    <div class="mineral-item">
-                        <h5>Potássio</h5>
-                        <p>150 mg/L</p>
+                <!-- Coluna dos Minerais em uma grade 2x2 -->
+                <div class="info-column">
+                    <h4>Minerais</h4>
+                    <div class="minerals-grid">
+                        <div class="mineral-item">
+                            <h5>Cálcio</h5>
+                            <p>120 mg/L</p>
+                        </div>
+                        <div class="mineral-item">
+                            <h5>Fósforo</h5>
+                            <p>80 mg/L</p>
+                        </div>
+                        <div class="mineral-item">
+                            <h5>Ferro</h5>
+                            <p>5 mg/L</p>
+                        </div>
+                        <div class="mineral-item">
+                            <h5>Potássio</h5>
+                            <p>150 mg/L</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
 
 </body>
+
 </html>

@@ -104,6 +104,25 @@ function pesquisarHistorico(event) {
     resultadoDiv.style.display = 'block';
 }
 
+function openClimaOverlay() {
+    document.getElementById('clima-overlay').classList.add('active');
+}
+
+function closeClimaOverlay() {
+    document.getElementById('clima-overlay').classList.remove('active');
+}
+
+// Fecha o overlay ao clicar fora dele
+window.addEventListener('click', function(event) {
+    var overlay = document.getElementById('clima-overlay');
+    var content = document.querySelector('#clima-overlay .overlay-content');
+
+    if (overlay && content && event.target === overlay) {
+        closeClimaOverlay();
+    }
+});
+
+
 // Adiciona um evento de clique na janela para fechar o overlay ao clicar fora dele
 window.addEventListener('click', function (event) {
     var overlay = document.getElementById('overlay');

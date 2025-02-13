@@ -5,11 +5,13 @@ body {
     height: 100vh;
     font-family: Arial, sans-serif;
 }
-img{
+
+img {
     width: 70%;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     margin-top: -50px
 }
+
 .left-section {
     flex: 1.5;
     background-image: url('https://img.freepik.com/fotos-gratis/lindo-jardim-de-morango-e-nascer-do-sol-em-doi-ang-khang-chiang-mai-tailandia_335224-761.jpg?t=st=1738954762~exp=1738958362~hmac=fbc9b8b3e96b2ba58d8ba8448d93136c3591c25b8d28196195ae44ce0cc6eec4&w=1060');
@@ -60,7 +62,7 @@ img{
 }
 
 .links a {
-    text-decoration: none; 
+    text-decoration: none;
     font-size: 14px;
     transition: color 0.3s ease;
 }
@@ -70,14 +72,15 @@ img{
 }
 
 .links a:last-child {
-    color: #555; 
+    color: #555;
 }
 
 .links a:first-child:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
     color: #d62727;
 }
-.links a:last-child:hover{
+
+.links a:last-child:hover {
     text-decoration: underline;
     color: #007bff;
 }
@@ -85,7 +88,7 @@ img{
 .login-form button {
     width: 107%;
     padding: 10px;
-    margin-top: 5px; 
+    margin-top: 5px;
     font-size: 16px;
     background-color: #28a745;
     color: white;
@@ -96,4 +99,31 @@ img{
 
 .login-form button:hover {
     background-color: #218838;
+}
+
+
+@media (max-width: 500px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .left-section {
+        order: -1;
+        /* Garante que a seção esquerda fique no topo */
+    }
+
+    .right-section {
+        margin-top: 20px;
+        /* Dá um espaçamento entre as seções */
+    }
 }
