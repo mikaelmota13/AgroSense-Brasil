@@ -100,7 +100,17 @@ function pesquisarHistorico(event) {
     const resultadoDiv = document.getElementById('resultado-pesquisa');
     resultadoDiv.innerHTML = `<h3>Resultados da Pesquisa</h3>
     <p>Exibindo dados de ${dataInicio} até ${dataFim}</p>
-    <h4> Esse é um hitorioco de dados de temperatura</h4>`;
+    <h4> No período foi realizado o monitoramento do sistema de irrigação na Fazenda Modelo - Setor 3. Durante esse tempo, foram coletados dados sobre temperatura ambiente, temperatura da água, umidade do solo e nível de irrigação.
+
+A temperatura ambiente apresentou uma média de 28.5°C, com valores máximo e mínimo registrados de 35.2°C e 22.1°C, respectivamente. A temperatura da água manteve-se relativamente estável, com uma média de 24.8°C, atingindo um máximo de 29.3°C e um mínimo de 20.5°C.
+
+A umidade do solo foi monitorada constantemente, apresentando uma média de 52.3%, com valores variando entre um máximo de 68.7% e um mínimo de 35.2%. O nível de irrigação foi ajustado conforme a necessidade, com uma média de 5.2 mm/dia, chegando a um máximo de 7.8 mm/dia e um mínimo de 2.5 mm/dia.
+
+Durante o período analisado, observou-se que a temperatura ambiente permaneceu dentro do esperado para a época do ano, enquanto a temperatura da água não apresentou oscilações bruscas. A umidade do solo foi mantida acima do limite crítico, garantindo condições adequadas para o cultivo. O nível de irrigação foi regulado para evitar desperdício e garantir eficiência no uso da água.
+
+Dessa forma, conclui-se que o sistema de irrigação funcionou de maneira eficiente ao longo do período avaliado. Os ajustes automáticos permitiram a manutenção da umidade do solo dentro dos parâmetros recomendados, sem excessos ou déficits hídricos. Não foram registradas anomalias significativas.
+
+</h4>`;
     resultadoDiv.style.display = 'block';
 }
 
